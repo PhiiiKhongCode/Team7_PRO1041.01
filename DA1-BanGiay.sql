@@ -128,16 +128,6 @@ CREATE TABLE KhuyenMai(
 	DieuKien nvarchar(30),
 	TrangThai bit
 );
-CREATE TABLE DieuKienKhuyenMai(
-	Id int identity(1,1) PRIMARY KEY,
-	IdLoaiGiay IdMau IdSize IdNhanHieu IdKieuDang
-	TenKhuyenMai nvarchar(50),
-	NgayBatDau date,
-	NgayKetThuc date,
-	PhanTramGiam int,
-	DieuKien nvarchar(30),
-	TrangThai bit
-);
 CREATE TABLE DonDoiHang(
 	IdDon int identity(1,1) PRIMARY KEY,
 	NgayDoiTra date,
