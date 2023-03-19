@@ -2,45 +2,44 @@
 USE nhom_7_ban_giay
 
 CREATE TABLE LoaiGiay(
-	IdLoaiGiay varchar(10) PRIMARY KEY,
+	IdLoaiGiay int identity(1,1) PRIMARY KEY,
 	MaLoai varchar(10),
 	TenLoai nvarchar(30),
-	TrangThai nvarchar(30)
+	TrangThai bit
 );
 CREATE TABLE MauSac(
-	IdMau varchar(10) PRIMARY KEY,
+	IdMau int identity(1,1) PRIMARY KEY,
 	MaMau varchar(10),
 	TenMau nvarchar(30),
-	TrangThai nvarchar(30)
+	TrangThai bit
 );
 CREATE TABLE Size(
-	IdSize varchar(10) PRIMARY KEY,
+	IdSize int identity(1,1) PRIMARY KEY,
 	MaSize varchar(10),
 	Size nvarchar(30),
-	TrangThai nvarchar(30)
+	TrangThai bit
 );
 CREATE TABLE NhanHieu(
-	IdNhanHieu varchar(10) PRIMARY KEY,
+	IdNhanHieu int identity(1,1) PRIMARY KEY,
 	MaNhanHieu varchar(10),
 	TenNhanHieu nvarchar(30),
-	TrangThai nvarchar(30)
-);
+	TrangThai bit
+);		
 CREATE TABLE KieuDang(
-	IdKieuDang varchar(10) PRIMARY KEY,
+	IdKieuDang int identity(1,1) PRIMARY KEY,
 	MaKieuDang varchar(10),
 	TenKieuDang nvarchar(30),
-	TrangThai nvarchar(30)
+	TrangThai bit
 );
 CREATE TABLE DeGiay(
-	IdDeGiay varchar(10) PRIMARY KEY,
-	MaDeGiay varchar(10),
+	IdDeGiay int identity(1,1) PRIMARY KEY,
+	Ma varchar(10),
 	ChatLieu nvarchar(30),
-	TrangThai nvarchar(30),
-	KieuDangDe nvarchar(30),
-	ChieuCaoDe varchar(10)
+	ChieuCaoDe float,
+	TrangThai bit
 );
 CREATE TABLE GiayCT(
-	IdGiayCT varchar(10) PRIMARY KEY,
+	IdGiayCT int identity(1,1) PRIMARY KEY,
 	MaGiayCT varchar(10),
 	TenGiay nvarchar(30),
 	GiaNhap decimal,
@@ -48,19 +47,19 @@ CREATE TABLE GiayCT(
 	SoLuongTon int,
 	Anh varchar(30),
 	MoTa nvarchar(40),
-	TrangThai nvarchar(30),
-	IdLoaiGiay varchar(10),
-	IdMau varchar(10),
-	IdSize varchar(10),
-	IdNhanHieu varchar(10),
-	IdKieuDang varchar(10),
-	IdDeGiay varchar(10)
+	TrangThai bit,
+	IdLoaiGiay int,
+	IdMau int,
+	IdSize int,
+	IdNhanHieu int,
+	IdKieuDang int,
+	IdDeGiay int
 );
 CREATE TABLE NhanVien(
-	IdNhanVien varchar(10) PRIMARY KEY,
+	IdNhanVien int identity(1,1) PRIMARY KEY,
 	MaNhanVien varchar(10),
 	HoVaTenNhanVien nvarchar(50),
-	GioiTinh nvarchar(5),
+	GioiTinh bit,
 	DiaChi nvarchar(50),
 	SDT nvarchar(12),
 	Email nvarchar(20),
@@ -71,28 +70,28 @@ CREATE TABLE NhanVien(
 	GhiChu nvarchar(50)
 );
 CREATE TABLE KhachHang(
-	IdKhachHang varchar(10) PRIMARY KEY,
+	IdKhachHang int identity(1,1) PRIMARY KEY,
 	MaKhachHang varchar(10),
 	Hoten nvarchar(50),
-	GioiTinh nvarchar(5),
+	GioiTinh bit,
 	NgaySinh Date,
 	DiaChi nvarchar(50),
 	SDT nvarchar(13),
 	Emai nvarchar(30),
-	TrangThai nvarchar(50),
+	TrangThai bit,
 	cccd varchar(13),
 	GhiChu nvarchar(50)
 );
 CREATE TABLE HoaDon(
-	Id varchar(10) PRIMARY KEY,
+	Id int identity(1,1) PRIMARY KEY,
 	MaHoaDon varchar(10),
-	IdNhanVien varchar(10),
-	IdKhachHang varchar(10),
+	IdNhanVien int,
+	IdKhachHang int,
 	TenKhachHang nvarchar(50),
 	NgayTao date,
 	TongTien decimal,
 	NgayThanhToan date,
-	TrangThai nvarchar(50),
+	TrangThai bit,
 	GhiChu nvarchar(50),
 	NgayShip date,
 	TienShip decimal,
@@ -102,49 +101,58 @@ CREATE TABLE HoaDon(
 	TenNguoiShip nvarchar(50),
 	CCCDNguoiShip varchar(13),
 	SDTNguoiShip nvarchar(13),
-	SDRNguoiNhan nvarchar(13)
+	SDTNguoiNhan nvarchar(13)
 );
 CREATE TABLE HoaDonChiTiet(
-	IdGiayCT varchar(10),
-	IdHoaDon varchar(10),
+	IdGiayCT int,
+	IdHoaDon int,
 	Soluong int,
 	GiaBan decimal
 	PRIMARY KEY(IdGiayCT,IdHoaDon)
 );
 CREATE TABLE KhuyenMaiGiay(
-	IdGiayCT varchar(10),
-	IdKhuyenMai varchar(10),
+	IdGiayCT int identity(1,1) PRIMARY KEY,
+	IdKhuyenMai int,
 	GiaBan decimal,
 	GiaKhuyenMai decimal,
-	TrangThai nvarchar(30)
+	TrangThai bit,
 	Primary key (IdGiayCT, IdKhuyenMai)
 );
 CREATE TABLE KhuyenMai(
-	IdKhuyenMai varchar(10) PRIMARY KEY,
+	IdKhuyenMai int identity(1,1) PRIMARY KEY,
 	MaKhuyenMai varchar(10),
 	TenKhuyenMai nvarchar(50),
 	NgayBatDau date,
 	NgayKetThuc date,
 	PhanTramGiam int,
 	DieuKien nvarchar(30),
-	TrangThai nvarchar(40)
+	TrangThai bit
 );
-CREATE TABLE DonDoiTra(
-	IdDon varchar(10) PRIMARY KEY,
+CREATE TABLE DieuKienKhuyenMai(
+	Id int identity(1,1) PRIMARY KEY,
+	IdLoaiGiay IdMau IdSize IdNhanHieu IdKieuDang
+	TenKhuyenMai nvarchar(50),
+	NgayBatDau date,
+	NgayKetThuc date,
+	PhanTramGiam int,
+	DieuKien nvarchar(30),
+	TrangThai bit
+);
+CREATE TABLE DonDoiHang(
+	IdDon int identity(1,1) PRIMARY KEY,
 	NgayDoiTra date,
 	NgayMua date,
-	HinhThuc nvarchar(30),
-	IdNhanVien varchar(10),
-	IdHoaDon varchar(10),
-	IdKhachHang varchar(10)
+	IdNhanVien int,
+	IdHoaDon int,
+	IdKhachHang int
 );
-CREATE TABLE DoiTra(
-	IdDoiTra varchar(10) PRIMARY KEY,
-	IdGiay varchar(10),
-	IdDon varchar(10),
+CREATE TABLE DoiHangCT(
+	IdDoiTra int identity(1,1) PRIMARY KEY,
+	IdGiay int,
+	IdDon int,
 	TenGiay nvarchar(50),
 	SoLuong int,
-	TrangThaiGiay nvarchar(40),
+	TrangThaiGiay bit,
 	LyDoDoiTra nvarchar(50),
 	MoTa nvarchar(50),
 );
