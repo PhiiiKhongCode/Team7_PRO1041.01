@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.mycompany.team2</groupId>
-    <artifactId>Team2</artifactId>
+    <groupId>com.mycompany</groupId>
+    <artifactId>Team7_DA1</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <repositories>
+    <packaging>jar</packaging>
+     <repositories>
         <repository>
             <id>unknown-jars-temp-repo</id>
             <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
@@ -15,7 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <exec.mainClass>com.mycompany.team2.Team2</exec.mainClass>
+        <exec.mainClass>com.mycompany.team7_da1.Team7_DA1</exec.mainClass>
     </properties>
     <dependencies>
         <dependency>
@@ -53,5 +54,4 @@
             <version>SNAPSHOT</version>
         </dependency>
     </dependencies>
-    <name>Team07_DA01</name>
 </project>
