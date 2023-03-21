@@ -1,4 +1,5 @@
 ﻿CREATE DATABASE nhom_7_ban_giay
+drop database nhom_7_ban_giay
 USE nhom_7_ban_giay
 
 CREATE TABLE LoaiGiay(
@@ -7,6 +8,9 @@ CREATE TABLE LoaiGiay(
 	TenLoai nvarchar(30),
 	TrangThai bit
 );
+insert into LoaiGiay(MaLoai, TenLoai, TrangThai) values ('l1', N'Loại 1', 1)
+select * from LoaiGiay
+
 CREATE TABLE MauSac(
 	IdMau int identity(1,1) PRIMARY KEY,
 	MaMau varchar(10),
@@ -16,7 +20,7 @@ CREATE TABLE MauSac(
 CREATE TABLE Size(
 	IdSize int identity(1,1) PRIMARY KEY,
 	MaSize varchar(10),
-	Size nvarchar(30),
+	Size float,
 	TrangThai bit
 );
 CREATE TABLE NhanHieu(
@@ -66,7 +70,8 @@ CREATE TABLE NhanVien(
 	cccd varchar(13),
 	TenTaiKhoan varchar(20),
 	MatKhau varchar(20),
-	ChucVu nvarchar(20),
+	ChucVu int,
+	TrangThai bit,
 	GhiChu nvarchar(50)
 );
 CREATE TABLE KhachHang(
@@ -79,11 +84,10 @@ CREATE TABLE KhachHang(
 	SDT nvarchar(13),
 	Emai nvarchar(30),
 	TrangThai bit,
-	cccd varchar(13),
 	GhiChu nvarchar(50)
 );
-CREATE TABLE HoaDon(
-	Id int identity(1,1) PRIMARY KEY,
+create TABLE HoaDon(
+	IdHoaDon int identity(1,1) PRIMARY KEY,
 	MaHoaDon varchar(10),
 	IdNhanVien int,
 	IdKhachHang int,
@@ -103,6 +107,8 @@ CREATE TABLE HoaDon(
 	SDTNguoiShip nvarchar(13),
 	SDTNguoiNhan nvarchar(13)
 );
+--Đổi tên cột
+EXEC sp_rename 'HoaDon.Id', 'IdHoaDon', 'COLUMN'; 
 CREATE TABLE HoaDonChiTiet(
 	IdGiayCT int,
 	IdHoaDon int,
@@ -110,14 +116,7 @@ CREATE TABLE HoaDonChiTiet(
 	GiaBan decimal
 	PRIMARY KEY(IdGiayCT,IdHoaDon)
 );
-CREATE TABLE KhuyenMaiGiay(
-	IdGiayCT int identity(1,1) PRIMARY KEY,
-	IdKhuyenMai int,
-	GiaBan decimal,
-	GiaKhuyenMai decimal,
-	TrangThai bit,
-	Primary key (IdGiayCT, IdKhuyenMai)
-);
+
 CREATE TABLE KhuyenMai(
 	IdKhuyenMai int identity(1,1) PRIMARY KEY,
 	MaKhuyenMai varchar(10),
@@ -128,25 +127,33 @@ CREATE TABLE KhuyenMai(
 	DieuKien nvarchar(30),
 	TrangThai bit
 );
+CREATE TABLE KhuyenMaiGiay(
+	IdGiayCT int,
+	IdKhuyenMai int,
+	GiaBan decimal,
+	GiaKhuyenMai decimal,
+	TrangThai bit,
+	Primary key (IdGiayCT, IdKhuyenMai)
+);
 CREATE TABLE DonDoiHang(
 	IdDon int identity(1,1) PRIMARY KEY,
-	NgayDoiTra date,
+	NgayDoi date,
 	NgayMua date,
 	IdNhanVien int,
 	IdHoaDon int,
 	IdKhachHang int
 );
 CREATE TABLE DoiHangCT(
-	IdDoiTra int identity(1,1) PRIMARY KEY,
+	Id int identity(1,1) PRIMARY KEY,
 	IdGiay int,
 	IdDon int,
-	TenGiay nvarchar(50),
 	SoLuong int,
 	TrangThaiGiay bit,
 	LyDoDoiTra nvarchar(50),
 	MoTa nvarchar(50),
 );
-
+--xóa cột
+alter table DoiHangCT drop column IdHDCT
 --Khóa ngoại Giày CT
 ALTER TABLE GiayCT
 ADD CONSTRAINT fk_GiayCT_id_LoaiGiay
@@ -216,14 +223,15 @@ ADD CONSTRAINT fk_HoaDon_id_KhachHang
 
 --Khóa ngoại Đơn Đổi Trả
 
-ALTER TABLE DonDoiTra
-ADD CONSTRAINT fk_DonDoiTra_id_HoaDon
+ALTER TABLE DonDoiHang
+ADD CONSTRAINT fk_DonDoiHang_id_HoaDon
  FOREIGN KEY (IdHoaDon)
- REFERENCES HoaDon (Id);
+ REFERENCES HoaDon (IdHoaDon);
 
 --Khóa ngoại Đổi Trả
 
-ALTER TABLE DoiTra
-ADD CONSTRAINT fk_DoiTra_id_DonDoiTra
+ALTER TABLE DoiHangCT
+ADD CONSTRAINT fk_DoiHangCT_id_DonDoiHang
  FOREIGN KEY (IdDon)
- REFERENCES DonDoiTra (IdDon);
+ REFERENCES DonDoiHang (IdDon);
+
